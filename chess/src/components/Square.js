@@ -10,6 +10,21 @@ function squareColor(i) {
     const row = Math.floor(i / 8)
     return column % 2 === row % 2 ? "white" : "brown"
 }
+function getPiece(piece) {
+    if (piece === null) return null
+    if (piece === "P") return "♙"
+    if (piece === "p") return "♟"
+    if (piece === "R") return "♖"
+    if (piece === "r") return "♜"
+    if (piece === "B") return "♗"
+    if (piece === "b") return "♝"
+    if (piece === "N") return "♘"
+    if (piece === "n") return "♞"
+    if (piece === "K") return "♔"
+    if (piece === "k") return "♚"
+    if (piece === "Q") return "♕"
+    if (piece === "q") return "♛"
+}
 
 /* Props are text and onClick function */
 export default function Square(props) {
@@ -18,8 +33,8 @@ export default function Square(props) {
         <div 
         className="square" 
         style={{backgroundColor: squareColor(props.index)}}
-        onClick={props.handleClick}>
-            {props.text}
+        onClick={(props.handleClick)}>
+            {getPiece(props.text)}
         </div>
     )
 

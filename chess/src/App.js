@@ -1,12 +1,19 @@
 import './App.css';
 import Board from './components/Board';
-import getDefaultBoard from './components/DefaultBoardSetup'
 
 
 function App() {
+
+  const gameState = {
+    playerTurn: "white",
+  }
+
+  const boardArray = ["r","n","b","q","k","b","n","r", "p","p","p","p","p","p","p","p",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"P","P","P","P","P","P","P","P","R","N","B","Q","K","B","N","R"]
+
+  console.log("app rendered")
   return (
     <div >
-      <Board array={getDefaultBoard()} />
+      <Board gamestate={gameState} array={boardArray} />
     </div>
   );
 }

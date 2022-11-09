@@ -1,38 +1,20 @@
+import calculateCover from 'coverCalculations'
 
-export default function potMoves(gamestate, boardarray, index) {
-    let legalMoves = []
-    [numberOfDirections, dx, dy, endCondition] = getMoveset(piece)
-    let x
-    let y
-
-
-    for (let i = 0; i < numberOfDirections; i++) {
-        x = index % 8
-        y = Math.floor(index / 8)
-        
-        do {
-            x += dx[i]
-            y += dy[i]
-
-            if (outsideBoard(x, y)) {
-                break
-            }
-            legalMoves.push(y * 8 + x)
-
-        } while (!endcondition(x, y))
+function friend(boardarray, piece, index) {
+    otherPiece = boardarray[index]
+    if (!otherPiece) {
+        return false
     }
-    
-
-
+    return (piece === piece.toUppercase()) === (otherPiece === otherPiece.toUppercase())
 }
 
 
+export default function calculatePotMoves(gamestate, boardarray, index) {
+    const piece = boardarray[index]
 
-    /* moveset can look like (for rook): 
+    let moves = calculateCover(boardarray, index)
 
+    moves = moves.filter(move => !friend(boardarray, piece, move))
 
-    
-    
-    
-    
-    */
+    return moves
+}

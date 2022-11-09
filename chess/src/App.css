@@ -1,0 +1,24 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: teal;
+  margin: 0;
+  padding: 0;
+}
+
+.board {
+  margin: 20px;
+  height: 602px;
+  width: 602px;
+  border: 1px solid black;
+}
+
+.square {
+  height: 75px;
+  width: 75px;
+  float: left;
+  text-align: center;
+  font-size: 60px;
+}

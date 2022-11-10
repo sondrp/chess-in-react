@@ -1,4 +1,5 @@
 import React from 'react'
+import calculatePotMoves from '../calculations/calculatePotMoves';
 import Square from "./Square"
 /* 
 It seems like it is best to define state of the game here, and also give the function to each 
@@ -22,14 +23,28 @@ because then it is really easy to update
 
 */
 
+/* Seems like a square needs an object describing it. These objects can come from somewhere?
+Need 64 of these
+{
+
+    index: 0,
+    text: "P",
+    circle: false
+
+}
+
+
+
+*/
 
 
 export default function Board(props) {
     const [boardArray, setBoardArray] = React.useState(props.array);
     const [gamestate, setGameState] = React.useState(props.gamestate)
-    const squareElements = boardArray.map((text, key) => <Square key={key} index={key} text={text} circle={true} handleClick={() => handleClick(gamestate, boardArray, key)}/>)
+    const squareElements = boardArray.map(s => <Square key={s.index} info={s} />)
 
     function handleClick(gamestate, boardArray, index) {
+        const legalMoves = calculatePotMoves(gamestate, boardArray, index)
         setBoardArray(prev => prev.map((square, i) => i === index ? null : square))
     }
 

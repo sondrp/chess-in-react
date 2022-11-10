@@ -1,4 +1,4 @@
-import getMoveset from 'moveset';
+import getMoveset from './moveset';
 
 
 function legalSquare(x, y) {

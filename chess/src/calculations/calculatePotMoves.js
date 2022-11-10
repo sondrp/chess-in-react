@@ -1,7 +1,7 @@
-import calculateCover from 'coverCalculations'
+import calculateCover from './coverCalculation'
 
 function friend(boardarray, piece, index) {
-    otherPiece = boardarray[index]
+    const otherPiece = boardarray[index]
     if (!otherPiece) {
         return false
     }

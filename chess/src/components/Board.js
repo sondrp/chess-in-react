@@ -1,52 +1,23 @@
 import React from 'react'
 import calculatePotMoves from '../calculations/calculatePotMoves';
 import Square from "./Square"
-/* 
-It seems like it is best to define state of the game here, and also give the function to each 
 
-function toggle(id) {
-    setBoxes(prevBoxes => prevBoxes.map(box => box.id !== id ? box : {...box, on : !box.on}))
-}
+
+/* Recieves prop with game state and an array of square objects. Both of these are stored as state. The square objects are mapped to make square elements to display. 
+Each square is given a key(index), a handleclick, and the rest(info: index, text, circle)
 
 */
-/* This function might have to be moved into Board, and then trigger setSquares when that is necessary */
-
-
-/* 
-Board object could maybe be like {
-    0: "R",
-    1: null
-}
-
-because then it is really easy to update
-
-
-*/
-
-/* Seems like a square needs an object describing it. These objects can come from somewhere?
-Need 64 of these
-{
-
-    index: 0,
-    text: "P",
-    circle: false
-
-}
-
-
-
-*/
-
-
 export default function Board(props) {
     const [boardArray, setBoardArray] = React.useState(props.array);
     const [gamestate, setGameState] = React.useState(props.gamestate)
-    const squareElements = boardArray.map(s => <Square key={s.index} info={s} />)
-
+    
     function handleClick(gamestate, boardArray, index) {
-        const legalMoves = calculatePotMoves(gamestate, boardArray, index)
-        setBoardArray(prev => prev.map((square, i) => i === index ? null : square))
+        const pieces = boardArray.map(s => s.text)
+        const legalMoves = calculatePotMoves(gamestate, pieces, index)
+        console.log(legalMoves)
     }
+
+    const squareElements = boardArray.map(s => <Square key={s.index} info={s} handleClick={() => handleClick(gamestate, boardArray, s.index)}/>)
 
     return (
         <div className="board">

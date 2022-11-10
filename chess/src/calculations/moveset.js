@@ -9,6 +9,11 @@
  * @returns [numberOfDirections, dx, dy, endCondition]
 */
 export default function getMoveset(piece) {
+    if (!piece) {
+        console.log("non piece clicked")
+        return
+    }
+
     const directional = (board, x, y) => board[y * 8 + x] !== null
     const undirectional = (board, x, y) => false
 

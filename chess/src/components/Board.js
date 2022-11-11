@@ -1,5 +1,5 @@
 import React from 'react'
-import calculatePotMoves from '../calculations/calculatePotMoves';
+import updateSquaresWhenClicked from '../calculations/updateSquares';
 import Square from "./Square"
 
 
@@ -12,9 +12,7 @@ export default function Board(props) {
     const [gamestate, setGameState] = React.useState(props.gamestate)
     
     function handleClick(gamestate, boardArray, index) {
-        const pieces = boardArray.map(s => s.text)
-        const legalMoves = calculatePotMoves(gamestate, pieces, index)
-        console.log(legalMoves)
+        setBoardArray(updateSquaresWhenClicked(boardArray, index))
     }
 
     const squareElements = boardArray.map(s => <Square key={s.index} info={s} handleClick={() => handleClick(gamestate, boardArray, s.index)}/>)

@@ -1,54 +1,47 @@
+
+/* Relative coordinates for all 8 surrounding squares */
+const d = {
+    up: [0, -1],
+    upleft: [1, -1],
+    left: [1, 0],
+    downleft: [1, 1],
+    down: [0, 1],
+    downright: [-1, 1],
+    right: [-1, 0],
+    upright: [-1, -1]
+}
+
 /* 
- * This function provides the tools to calculate which squares are covered by some piece on the board. Each piece can move differently than others. 
- * Some pieces are directional, like the rook, queen and bishop. These have a different end condition than knight or king. 
- * The undirectional pieces will include one move in each direction (end condition is stop after one move),
- * while the directional pieces will continue to move in one direction until they have met another piece (their end condition is finding a square that is not empty)
- * directions is an array of number pairs, specifying direction like a vector
- * 
- * Maybe easier todo with some system like polar coordinates?
- * 
- * @returns [numberOfDirections, directions, endCondition]
+Will give you the information necessary to calculate the squares covered by a piece.
+
+It returns an array of two dimentional vectors, indicating the direction the piece moves. Some piece will halt: only move one square in each direction.
+Pieces that halt are knight, king and pawn
+
+Some pieces do not halt, and continue in one direction until they meet another piece, or the edge of the board.
+Pieces that do not halt are rook, bishop, queen.
+Note: to calculate cover, the first square in one direction occupied by another piece should be included in the cover.
+
+returns: [directions, halt]
+
 */
 export default function getMoveset(piece) {
-    if (!piece) {
-        console.log("non piece clicked")
-        return
-    }
 
-    /* Relative coordinates for all 8 surrounding squares */
-    const d = {
-        up: [0, -1],
-        upleft: [1, -1],
-        left: [1, 0],
-        downleft: [1, 1],
-        down: [0, 1],
-        downright: [-1, 1],
-        right: [-1, 0],
-        upright: [-1, -1]
+    if (piece.toUpperCase() === "P") {
+        const forward = piece === piece.toUpperCase() ? -1 : 1
+        return [[[1, forward], [-1, forward]], true]
     }
-
-    const directional = (board, x, y) => board[y * 8 + x] !== null
-    const undirectional = (board, x, y) => false
 
     if (piece.toUpperCase() === "R") {
-        return [4, [d.up, d.right, d.down, d.left], directional]
+        return [[d.up, d.right, d.down, d.left], false]
     }
     if (piece.toUpperCase() === "B") {
-        return [4, [d.upright, d.downright, d.downleft, d.upleft], directional]
-    }
-    if (piece.toUpperCase() === "Q") {
-        return [8, [d.up, d.upright, d.right, d.downright, d.down, d.downleft, d.left, d.upleft], directional]
+        return [[d.upright, d.downright, d.downleft, d.upleft], false]
     }
     if (piece.toUpperCase() === "N") {
-        return [8, [[1, -2], [2, -1], [2, 1], [1, 2], [-1, 2], [-2, 1], [-2, -1], [-1, -2]], undirectional]
+        return [[[1, -2], [2, -1], [2, 1], [1, 2], [-1, 2], [-2, 1], [-2, -1], [-1, -2]], true]
     }
-    if (piece === "P") {
-        return [2, [[1, -1], [-1, -1]], undirectional]
-    }
-    if (piece === "p") {
-        return [2, [[1, 1], [-1, 1]], undirectional]
-    }
-    if (piece.toUpperCase() === "K") {
-        return [8, [d.up, d.upright, d.right, d.downright, d.down, d.downleft, d.left, d.upleft], undirectional]
+    if (piece.toUpperCase() === "Q" || piece.toUpperCase() === "K") {
+        const isKing = piece.toUpperCase() === "K"
+        return [[d.up, d.upright, d.right, d.downright, d.down, d.downleft, d.left, d.upleft], isKing]
     }
 }

@@ -1,33 +1,33 @@
-import getMoveset from './moveset.js';
 
+import getMoveset from "./moveset"
 
-function legalSquare(x, y) {
+function onTheBoard(x, y) {
     return -1 < x && x < 8 && -1 < y && y < 8
 }
 
-/*  */
+
 export default function calculateCover(boardarray, index) {
     const piece = boardarray[index]
 
-    const [numberOfDirections, directions, doContinue] = getMoveset(piece)
+    const [directions, halt] = getMoveset(piece)
 
     let cover = []
-    let x, y, dx, dy
+    let x, y
 
-
-    for (let i = 0; i < numberOfDirections; i++) {
+    for (let [dx, dy] of directions) {
         x = index % 8
-        y = Math.floor(index / 8);
-        [dx, dy] = directions[i]
-
-
+        y = Math.floor(index / 8)
+        
         do {
             x += dx
             y += dy
-            if (!legalSquare(x, y)) break
+            
+            if (!onTheBoard(x, y)) break        // break if the square is off board
 
-            cover.push(y * 8 + x)
-        } while (doContinue(boardarray, x, y))
+            cover.push(y * 8 + x)               // the actual coordinate
+
+
+        } while (!halt && !boardarray[y*8+x])   // Two conditions need to be met to continue: piece does not halt, and the current square is not occupied 
     }
-    return cover
+
 }

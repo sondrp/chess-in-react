@@ -5,13 +5,15 @@ import defaultBoard from './data/defaultBoard';
 
 function App() {
 
-  const gameState = {
-    playerTurn: "white",
+  const gamestate = {
+    isWhitePlaying: true,
+    potMoves: [],
+    selectedSquare: null 
   }
   console.log("app rendered")
   return (
     <div >
-      <Board gamestate={gameState} array={defaultBoard()} />
+      <Board gamestate={gamestate} array={defaultBoard()} />
     </div>
   );
 }

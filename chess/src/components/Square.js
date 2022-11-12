@@ -36,7 +36,6 @@ export default function Square(props) {
         style={{backgroundColor: squareColor(props.info.index, props.info.circle)}}
         onClick={(props.handleClick)}>
             {getPiece(props.info.text)}
-            {props.info.index}
         </div>
     )
 

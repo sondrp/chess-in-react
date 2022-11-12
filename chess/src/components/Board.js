@@ -9,10 +9,13 @@ Each square is given a key(index), a handleclick, and the rest(info: index, text
 */
 export default function Board(props) {
     const [boardArray, setBoardArray] = React.useState(props.array);
-    const [gamestate, setGameState] = React.useState(props.gamestate)
+    let gamestate = props.gamestate
     
     function handleClick(gamestate, boardArray, index) {
-        setBoardArray(updateSquaresWhenClicked(boardArray, index))
+        [gamestate, boardArray] = updateSquaresWhenClicked(gamestate, boardArray, index)
+        console.log(gamestate)
+
+        setBoardArray(boardArray)
     }
 
     const squareElements = boardArray.map(s => <Square key={s.index} info={s} handleClick={() => handleClick(gamestate, boardArray, s.index)}/>)

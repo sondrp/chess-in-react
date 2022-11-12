@@ -1,21 +1,17 @@
 import calculatePotMoves from "./potMoves.js"
 
-export default function updateSquaresWhenClicked(squares, index) {
-    const indexesOfLegalMoves = [] // ASSUME NO PREVIOUS CALCULATIONS TODO : FIX
+export default function updateSquaresWhenClicked(gamestate, squares, index) {
+    let potMoves = gamestate.potMoves
+    const boardarray = squares.map(square => square.text)
 
 
-    if (!indexesOfLegalMoves.includes(index)) { // CALCULATE POTMOVES
+    if (!potMoves.includes(index)) { // CALCULATE POTMOVES
 
 
-        const boardarray = squares.map(square => square.text)
-        const potMoves = calculatePotMoves(boardarray, index)
+        potMoves = calculatePotMoves(gamestate, boardarray, index)
 
-        squares = squares.map(square => (
-            {
-                ...square,
-                circle: potMoves.includes(square.index) ? true : false
-            }
-        ))
+
+        gamestate.selectedSquare = index
 
 
         // Find all the moves the piece can move to
@@ -28,7 +24,29 @@ export default function updateSquaresWhenClicked(squares, index) {
         //console.log(potMoves)
 
 
+    } else {
+        // In this case, the move is legal to do. Now we update the gamearray and gamestate to complete the move
 
-        return squares
+        const moveFrom = gamestate.selectedSquare
+        gamestate.isWhitePlaying = !gamestate.isWhitePlaying
+        potMoves = []
+
+        const movingPiece = boardarray[moveFrom]
+        boardarray[moveFrom] = null
+        boardarray[index] = movingPiece
+        
+
     }
+
+
+    gamestate.potMoves = potMoves
+
+    squares = squares.map(square => (
+        {
+            ...square,
+            text: boardarray[square.index],
+            circle: potMoves.includes(square.index) ? true : false
+        }
+    ))
+    return [gamestate, squares]
 }

@@ -1,6 +1,5 @@
 
 export default function removeFriendlyPieces(boardarray, index, cover) {
-    console.log(cover)
     const piece = boardarray[index]
     const isWhite = piece === piece.toUpperCase()
     let moves = []
@@ -12,6 +11,5 @@ export default function removeFriendlyPieces(boardarray, index, cover) {
             moves.push(i)
         }
     }
-    console.log(moves)
     return moves
 }

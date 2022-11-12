@@ -10,6 +10,14 @@ export default function updateSquaresWhenClicked(squares, index) {
         const boardarray = squares.map(square => square.text)
         const potMoves = calculatePotMoves(boardarray, index)
 
+        squares = squares.map(square => (
+            {
+                ...square,
+                circle: potMoves.includes(square.index) ? true : false
+            }
+        ))
+
+
         // Find all the moves the piece can move to
         //const potMoves = calculatePotMoves(squares.map(square => square.text), index)
 

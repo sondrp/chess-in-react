@@ -29,5 +29,5 @@ export default function calculateCover(boardarray, index) {
 
         } while (!halt && !boardarray[y*8+x])   // Two conditions need to be met to continue: piece does not halt, and the current square is not occupied 
     }
-
+    return cover
 }

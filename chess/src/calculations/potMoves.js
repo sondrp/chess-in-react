@@ -8,7 +8,6 @@ import addSpecialMoves from "./addSpecialMoves.js"
 
 /* Calculates all moves that a piece can legally move to, given the index of the piece */
 export default function calculatePotMoves(boardarray, index) {
-    console.log("--------------------------------------")
     const piece = boardarray[index]
     
     // First step in potmoves is to check if there is a piece on the square
@@ -25,20 +24,14 @@ export default function calculatePotMoves(boardarray, index) {
     // This is is done through several substeps.
     // substep 1: calculate cover
     let cover = calculateCover(boardarray, index)
-    console.log("cover:")
-    console.log(cover)
 
 
     // substep 2: add special moves (pawn moves, castle, en passant) TODO : add checks for castle and en passant
     let moves = addSpecialMoves(boardarray, cover, index)
-    console.log("special moves added")
-    console.log(moves)
 
 
     // substep 3: remove all friendly pieces (piece can never move to a square occupied by a friend)
     moves = removeFriendlyPieces(boardarray, index, moves)
-    console.log("moves friendlies removed")
-    console.log(moves)
 
     // substep 4: remove all moves that put your own king in check :(  
     let potMoves = []
